@@ -1,5 +1,6 @@
 package ca.csf.server;
 
-public class IServer {
-
+public interface IServer
+{
+public void sayHello(String helloFromWho);
 }
