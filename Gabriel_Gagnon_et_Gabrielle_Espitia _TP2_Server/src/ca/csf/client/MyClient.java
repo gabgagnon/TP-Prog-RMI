@@ -15,12 +15,10 @@ public class MyClient implements Serializable {
 		CallHandler callHandler = new CallHandler();
 		Client client = new Client("127.0.0.1", 12345, callHandler);
 		IServer myServiceCaller = client.getGlobal(IServer.class);
-		
 		String toSend = "Frank";
 		
 		//Obtention du Proxy		
 		myServiceCaller.sayHello(toSend);
-		
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
