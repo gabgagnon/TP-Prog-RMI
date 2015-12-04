@@ -14,7 +14,8 @@ public class MyServer extends Server implements IServer {
 		try {
 			callHandler.registerGlobal(IServer.class, this);
 			this.bind(12345, callHandler);
-			
+//			ServListener serv = new ServListener();
+//			addServListener(serv );
 			while(true){
 				
 				try {
@@ -33,6 +34,8 @@ public class MyServer extends Server implements IServer {
 		}
 	}
 	
+
+
 	@Override
 	public void sayHello(String helloFromWho) {
 		System.out.println(helloFromWho);
@@ -42,5 +45,10 @@ public class MyServer extends Server implements IServer {
 	public static void main(String... arg) 
 	{
 		new MyServer();
+	}
+
+	@Override
+	public void addServListener(ServListener clientProxy) {
+		this.addServerListener(clientProxy);
 	}
 }
