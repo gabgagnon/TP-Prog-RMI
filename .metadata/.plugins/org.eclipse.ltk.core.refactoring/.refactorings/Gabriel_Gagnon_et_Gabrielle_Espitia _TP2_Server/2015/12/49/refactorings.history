@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;ca.csf.Server&apos; to &apos;ca.csf.server&apos;&#x0D;&#x0A;- Original project: &apos;Gabriel_Gagnon_et_Gabrielle_Espitia _TP2_Server&apos;&#x0D;&#x0A;- Original element: &apos;Gabriel_Gagnon_et_Gabrielle_Espitia _TP2_Server/src/ca.csf.Server&apos;&#x0D;&#x0A;- Renamed element: &apos;Gabriel_Gagnon_et_Gabrielle_Espitia _TP2_Server/src/ca.csf.server&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings&#x0D;&#x0A;- Rename subpackages of the package" description="Rename package &apos;ca.csf.Server&apos;" flags="589830" hierarchical="true" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;ca.csf.Server" name="ca.csf.server" qualified="false" references="true" stamp="1449257042746" textual="false" version="1.0"/>
+</session>
