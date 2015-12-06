@@ -58,6 +58,10 @@ public class Model
 		}
 	}
 	
+	public boolean getPlayer()
+	{
+		return player;
+	}
 	
 	public void moveToNextWord() throws IllegalModelOperationException
 	{
@@ -74,6 +78,7 @@ public class Model
 	//This should always be called instead of directly modifying the attribute (how could we enforce that???)
 	private void setCurrentWordPosition(int newPosition)
 	{
+		
 		//Validations should be made before calling this function.
 		this.currentWordPosition = newPosition;
 	}
@@ -93,10 +98,11 @@ public class Model
 		this.observers.add(observer);
 	}
 	
-	public boolean columnClicked(int column) throws IOException 
+	public boolean columnClicked(int column) throws Exception 
 	{
 		boolean success = false;
-		//FG: robustesse. il faut valider _column (-9, 9877)
+		if (column < 0 || column > colMax) throw new Exception("The value of the column exceeds the number of columns");
+		
 		for (int row = 0; row < rowMax; ++row)
 		{//FG: peu efficace, on devrait conserver cette information au lieu de la calculer à chaque fois.
 			if (gameArray[column][row].empty)
