@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
+import ca.csf.client.ClientController;
+import ca.csf.client.MyServerObserver;
+
 public class Model
 {
-	private ArrayList<ServListener> observers = new ArrayList<ServListener>();
+	private ArrayList<MyServerObserver> observers = new ArrayList<MyServerObserver>();
 	
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private int currentWordPosition;
@@ -31,6 +34,13 @@ public class Model
 		return colMax;
 	}
 	
+	public void registerObserver(ClientController clientController) {
+		
+//			this.observers.add(observer);
+		
+	}
+
+	
 	
 	public Model(int c, int r, int w) throws InvalidObjectException
 	{
@@ -46,7 +56,11 @@ public class Model
 		
 		initArray();
 	}
-			
+	
+	public Model()
+	{
+		
+	}
 	private void initArray() 
 	{
 		for (int x = 0; x < colMax; ++x)
@@ -58,6 +72,10 @@ public class Model
 		}
 	}
 	
+	public boolean getPlayer()
+	{
+		return player;
+	}
 	
 	public void moveToNextWord() throws IllegalModelOperationException
 	{
@@ -74,6 +92,7 @@ public class Model
 	//This should always be called instead of directly modifying the attribute (how could we enforce that???)
 	private void setCurrentWordPosition(int newPosition)
 	{
+		
 		//Validations should be made before calling this function.
 		this.currentWordPosition = newPosition;
 	}
@@ -88,15 +107,16 @@ public class Model
 		return false;
 	}
 
-	public void addObserver(ServListener observer)
+	public void addObserver(MyServerObserver observer)
 	{
 		this.observers.add(observer);
 	}
 	
-	public boolean columnClicked(int column) throws IOException 
+	public boolean columnClicked(int column) throws Exception 
 	{
 		boolean success = false;
-		//FG: robustesse. il faut valider _column (-9, 9877)
+		if (column < 0 || column > colMax) throw new Exception("The value of the column exceeds the number of columns");
+		
 		for (int row = 0; row < rowMax; ++row)
 		{//FG: peu efficace, on devrait conserver cette information au lieu de la calculer à chaque fois.
 			if (gameArray[column][row].empty)
@@ -182,7 +202,7 @@ public class Model
 	
 	private void notifyObservers(int column, int row, boolean player) throws IOException
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.coinAdded(column, row, player);
 		}
@@ -190,7 +210,7 @@ public class Model
 
 	private void disableControlButtons() throws InvalidObjectException
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.disableControlButtons();
 		}
@@ -198,7 +218,7 @@ public class Model
 	
 	private void disableControlButton(int column)
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.disableControlButton(column);
 		}
