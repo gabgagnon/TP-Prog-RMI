@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import ca.csf.client.ClientController;
 import ca.csf.client.MyServerObserver;
+import ca.csf.client.View;
 import net.sf.lipermi.exception.LipeRMIException;
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Server;
@@ -67,8 +68,12 @@ public class ServerController extends Server implements IServer {
 		this.addServerListener(clientProxy);
 	}
 
+
 	@Override
-	public void registerObserver(ClientController clientController) {
-		//this.model.addObserver(clientController);
+	public void addModelObserver(MyServerObserver view) {
+		this.model.addObserver(view);
 	}
+
+
+
 }

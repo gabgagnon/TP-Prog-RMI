@@ -15,7 +15,7 @@ public class ClientController implements Serializable{
 
 	static final long serialVersionUID =  42L;
 	private CallHandler callHandler;
-	static IServer myServiceCaller;
+	private IServer myServiceCaller;
 	private View view;
 	
 	
@@ -26,10 +26,11 @@ public class ClientController implements Serializable{
 		try {
 			client = new Client("127.0.0.1", 12345, callHandler);
 			myServiceCaller = client.getGlobal(IServer.class);
-			String toSend = "Frank";
-			myServiceCaller.sayHello(toSend);	
-			callHandler.registerGlobal(MyServerObserver.class, this);
-			myServiceCaller.registerObserver(this);
+			
+			myServiceCaller.addModelObserver(view);
+			
+			callHandler.registerGlobal(MyServerObserver.class, view);
+			
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
