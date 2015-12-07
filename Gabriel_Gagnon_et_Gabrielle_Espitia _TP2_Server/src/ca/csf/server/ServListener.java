@@ -1,7 +1,7 @@
 package ca.csf.server;
 
 import java.net.Socket;
-
+import ca.csf.client.MyServerObserver;
 import net.sf.lipermi.net.IServerListener;
 
 public class ServListener implements IServerListener 
@@ -15,20 +15,11 @@ public class ServListener implements IServerListener
 {
 		System.out.println("Client disconnected: " + socket.getInetAddress());
 	}
-
-	public void coinAdded(int row, int column, boolean player) 
+	
+	public MyServerObserver addObserver(MyServerObserver observer)
 	{
-
+		return observer;
 	}
-
-	public void disableControlButtons() 
-	{
-
-	}
-
-	public void disableControlButton(int column)
-	{
-
-	}
+	
 
 }

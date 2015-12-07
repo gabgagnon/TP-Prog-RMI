@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
+import ca.csf.client.ClientController;
+import ca.csf.client.MyServerObserver;
+
 public class Model
 {
-	private ArrayList<ServListener> observers = new ArrayList<ServListener>();
+	private ArrayList<MyServerObserver> observers = new ArrayList<MyServerObserver>();
 	
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private int currentWordPosition;
@@ -31,6 +34,13 @@ public class Model
 		return colMax;
 	}
 	
+	public void registerObserver(ClientController clientController) {
+		
+//			this.observers.add(observer);
+		
+	}
+
+	
 	
 	public Model(int c, int r, int w) throws InvalidObjectException
 	{
@@ -46,7 +56,11 @@ public class Model
 		
 		initArray();
 	}
-			
+	
+	public Model()
+	{
+		
+	}
 	private void initArray() 
 	{
 		for (int x = 0; x < colMax; ++x)
@@ -93,7 +107,7 @@ public class Model
 		return false;
 	}
 
-	public void addObserver(ServListener observer)
+	public void addObserver(MyServerObserver observer)
 	{
 		this.observers.add(observer);
 	}
@@ -188,7 +202,7 @@ public class Model
 	
 	private void notifyObservers(int column, int row, boolean player) throws IOException
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.coinAdded(column, row, player);
 		}
@@ -196,7 +210,7 @@ public class Model
 
 	private void disableControlButtons() throws InvalidObjectException
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.disableControlButtons();
 		}
@@ -204,7 +218,7 @@ public class Model
 	
 	private void disableControlButton(int column)
 	{
-		for(ServListener obs : this.observers)
+		for(MyServerObserver obs : this.observers)
 		{
 			obs.disableControlButton(column);
 		}
