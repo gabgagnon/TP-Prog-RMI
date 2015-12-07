@@ -15,11 +15,5 @@ public class ServListener implements IServerListener
 {
 		System.out.println("Client disconnected: " + socket.getInetAddress());
 	}
-	
-	public MyServerObserver addObserver(MyServerObserver observer)
-	{
-		return observer;
-	}
-	
 
 }

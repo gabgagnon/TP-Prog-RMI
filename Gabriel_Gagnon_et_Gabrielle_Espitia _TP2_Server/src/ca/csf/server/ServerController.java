@@ -28,7 +28,9 @@ public class ServerController extends Server implements IServer {
 		try {
 			callHandler.registerGlobal(IServer.class, this);
 			this.bind(12345, callHandler);
-			ServListener serv = new ServListener();
+//			ServListener serv = new ServListener();
+//			this.addServerListener(new ServListener());
+
 			this.model = new Model();
 			
 			while(true){

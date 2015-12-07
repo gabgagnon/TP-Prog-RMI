@@ -20,35 +20,36 @@ public class ClientController implements Serializable{
 	
 	
 	public ClientController() {
+		
+		CallHandler callHandler = new CallHandler();
+		Client client;
 		try {
+			client = new Client("127.0.0.1", 12345, callHandler);
+			myServiceCaller = client.getGlobal(IServer.class);
+			String toSend = "Frank";
+			myServiceCaller.sayHello(toSend);	
 			callHandler.registerGlobal(MyServerObserver.class, this);
-		} catch (LipeRMIException e) {
+			myServiceCaller.registerObserver(this);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			System.out.println("Client done");
+			client.close();
+		} catch (IOException | LipeRMIException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		myServiceCaller.registerObserver(this);
-
+			e1.printStackTrace();
+		}
+				
 	}
 	
 	
 	public static void main(String... args) throws IOException{
-		CallHandler callHandler = new CallHandler();
-		Client client = new Client("127.0.0.1", 12345, callHandler);
-		myServiceCaller = client.getGlobal(IServer.class);
-		String toSend = "Frank";
-		
-		//Obtention du Proxy		
-		myServiceCaller.sayHello(toSend);
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Client done");
-		
-		client.close();
-	}
+
+		new ClientController();
+}
 	public void columnClicked(int columnIndex) throws IOException 
 	{
 
