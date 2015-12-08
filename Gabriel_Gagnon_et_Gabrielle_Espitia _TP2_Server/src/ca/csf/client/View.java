@@ -39,6 +39,7 @@ public class View extends JFrame implements MyServerObserver
 	private Color colorPlayerOne = new Color(255,0,0);
 	private Color colorPlayerTwo = new Color(0,0,255);
 	
+	
 	private final String TURN_PREFIX = "It's the turn of ";
 	
 	public View(ClientController controller)
@@ -83,7 +84,6 @@ public class View extends JFrame implements MyServerObserver
 		if (nbRows <= 0 || nbColumns <= 0) throw new IndexOutOfBoundsException("The board can't be empty.");
 		if (nbRows >= 25 || nbColumns >= 25) throw new IndexOutOfBoundsException("The maximum size for a board is 25 by 25");
 
-		
 		this.centerPane.removeAll();
 		this.placeHolders = new MyImageContainer[nbRows][nbColumns];
 		this.controlButtons = new JButton[nbColumns];

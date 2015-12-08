@@ -1,19 +1,16 @@
 package ca.csf.server;
 
-import java.awt.Image;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-import ca.csf.client.ClientController;
+
 import ca.csf.client.MyServerObserver;
 
 public class Model
 {
 	private ArrayList<MyServerObserver> observers = new ArrayList<MyServerObserver>();
 	
-	private ArrayList<Image> images = new ArrayList<Image>();
-	private int currentWordPosition;
 	private int howManyInLineToWin;
 	private int counterToWin;
 	
@@ -24,6 +21,17 @@ public class Model
 	
 	private boolean player = true;
 		
+	public Model(int column, int row, int width)
+	{
+		howManyInLineToWin = width;
+		rowMax = row;
+		colMax = column;
+				
+		gameArray = new Case [colMax][rowMax];
+		
+		initArray();
+	}
+	
 	public int getRowMax() 
 	{
 		return rowMax;
@@ -32,35 +40,8 @@ public class Model
 	public int getColMax() 
 	{
 		return colMax;
-	}
+	}	
 	
-	public void registerObserver(ClientController clientController) {
-		
-//			this.observers.add(observer);
-		
-	}
-
-	
-	
-	public Model(int c, int r, int w) throws InvalidObjectException
-	{
-		if (r <= 0 || c <= 0) throw new IndexOutOfBoundsException("The board can't be empty.");
-		if (r >= 25 || c >= 25) throw new IndexOutOfBoundsException("The maximum size for a board is 25 by 25");
-		if (w > 12 || w < 4) throw new InvalidObjectException("The connect requirement has to be at least of 4, and lesser than 12");
-		
-		howManyInLineToWin = w;
-		rowMax = r;
-		colMax = c;
-				
-		gameArray = new Case [colMax][rowMax];
-		
-		initArray();
-	}
-	
-	public Model()
-	{
-		
-	}
 	private void initArray() 
 	{
 		for (int x = 0; x < colMax; ++x)
@@ -76,40 +57,15 @@ public class Model
 	{
 		return player;
 	}
-	
-	public void moveToNextWord() throws IllegalModelOperationException
-	{
-		if(this.hasNext())
-		{
-			this.setCurrentWordPosition(this.currentWordPosition+1);
-		}
-		else
-		{
-			throw new IllegalModelOperationException("Cannot perform nextAction when on the last entry.");
-		}
-	}
-	
-	//This should always be called instead of directly modifying the attribute (how could we enforce that???)
-	private void setCurrentWordPosition(int newPosition)
-	{
 		
-		//Validations should be made before calling this function.
-		this.currentWordPosition = newPosition;
-	}
-	
-	
-	public boolean hasNext()
-	{
-		if(this.currentWordPosition < this.images.size() - 1)
-		{
-			return true;
-		}
-		return false;
-	}
-
 	public void addObserver(MyServerObserver observer)
 	{
 		this.observers.add(observer);
+	}
+	
+	public int countObservers()
+	{
+		return this.observers.size();
 	}
 	
 	public boolean columnClicked(int column) throws Exception 

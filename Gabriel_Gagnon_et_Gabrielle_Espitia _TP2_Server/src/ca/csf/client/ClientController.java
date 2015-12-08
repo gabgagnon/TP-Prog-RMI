@@ -3,7 +3,6 @@ package ca.csf.client;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import ca.csf.client.View;
 import ca.csf.server.IServer;
@@ -17,28 +16,24 @@ public class ClientController implements Serializable{
 	private CallHandler callHandler;
 	private IServer myServiceCaller;
 	private View view;
+	private int id = 0;
 	
-	
-	public ClientController() {
-		
-		CallHandler callHandler = new CallHandler();
+	public ClientController() 
+	{
+		callHandler = new CallHandler();
 		Client client;
-		try {
+		this.view = new View(this);
+		
+		try {			
 			client = new Client("127.0.0.1", 12345, callHandler);
 			myServiceCaller = client.getGlobal(IServer.class);
 			
-			myServiceCaller.addModelObserver(view);
+			id = myServiceCaller.addPlayerObserver(view);
+			int a = myServiceCaller.getNbRows();
+			view.initBoard(myServiceCaller.getNbRows(), myServiceCaller.getNbColumns());
 			
 			callHandler.registerGlobal(MyServerObserver.class, view);
-			
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			System.out.println("Client done");
-			client.close();
+
 		} catch (IOException | LipeRMIException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -47,13 +42,13 @@ public class ClientController implements Serializable{
 	}
 	
 	
-	public static void main(String... args) throws IOException{
-
+	public static void main(String... args) throws IOException
+	{
 		new ClientController();
-}
+	}
 	public void columnClicked(int columnIndex) throws IOException 
 	{
-
+		
 	}
 	
 	public void restartGame () 

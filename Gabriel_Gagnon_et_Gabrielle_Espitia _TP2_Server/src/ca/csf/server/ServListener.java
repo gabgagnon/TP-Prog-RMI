@@ -1,7 +1,6 @@
 package ca.csf.server;
 
 import java.net.Socket;
-import ca.csf.client.MyServerObserver;
 import net.sf.lipermi.net.IServerListener;
 
 public class ServListener implements IServerListener 
