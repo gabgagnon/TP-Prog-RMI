@@ -25,7 +25,6 @@ public class ServerController extends Server implements IServer
 			this.bind(12345, callHandler);
 			ServListener serv = new ServListener();
 			this.addServerListener(new ServListener());
-			
 			while(true){
 				try {
 					Thread.sleep(500);
@@ -34,10 +33,7 @@ public class ServerController extends Server implements IServer
 					e.printStackTrace();
 				}
 			}				
-		} catch (LipeRMIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (LipeRMIException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -68,5 +64,21 @@ public class ServerController extends Server implements IServer
 	@Override
 	public int getNbColumns() {
 		return this.model.getColMax();
+	}
+
+	@Override
+	public void columnClicked(int columnIndex)
+	{		
+		try {
+			model.columnClicked(columnIndex);
+			if(model.IsArrayFull());
+			{
+				close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
 	}
 }

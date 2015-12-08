@@ -20,6 +20,8 @@ public class Model
 	private int colMax;
 	
 	private boolean player = true;
+	
+	final String ARRAY_FULL_MSG = "Le tableau de jeu est complètement rempli. Partie nulle.";
 		
 	public Model(int column, int row, int width)
 	{
@@ -68,9 +70,8 @@ public class Model
 		return this.observers.size();
 	}
 	
-	public boolean columnClicked(int column) throws Exception 
+	public void columnClicked(int column) throws Exception 
 	{
-		boolean success = false;
 		if (column < 0 || column > colMax) throw new Exception("The value of the column exceeds the number of columns");
 		
 		for (int row = 0; row < rowMax; ++row)
@@ -80,7 +81,6 @@ public class Model
 				player ^= true;		
 				gameArray[column][row].player = player;
 				notifyObservers(column, row, player);
-				success =  true;
 				isWon(column, row);
 				gameArray[column][row].empty = false;
 				break;
@@ -89,10 +89,13 @@ public class Model
 		
 		checkIfSomeColumnsAreFull();
 		
-		return IsArrayFull();		
+		if (IsArrayFull())
+		{
+			gameOver(ARRAY_FULL_MSG);
+		}		
 	}
 	
-	private boolean IsArrayFull() 
+	public boolean IsArrayFull() 
 	{
 		for (int x = 0; x < colMax; ++x)
 		{
@@ -100,6 +103,7 @@ public class Model
 				return false;
 			}			
 		}
+		
 		return true;
 	}
 
@@ -179,4 +183,12 @@ public class Model
 			obs.disableControlButton(column);
 		}
 	}
+	private void gameOver(String message) throws InvalidObjectException
+	{
+		for(MyServerObserver obs : this.observers)
+		{
+			obs.gameOver(message);
+		}
+	}
+	
 }

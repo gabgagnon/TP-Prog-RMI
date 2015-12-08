@@ -135,15 +135,7 @@ public class View extends JFrame implements MyServerObserver
 		public void actionPerformed(ActionEvent arg0)
 		{
 			System.out.println("Action on button: " + columnIndex);
-			try 
-			{
-				controller.columnClicked(columnIndex);
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			controller.columnClicked(columnIndex);
 		}
 	}
 
@@ -214,6 +206,11 @@ public class View extends JFrame implements MyServerObserver
 	{
 		JOptionPane.showMessageDialog(View.this, message);
 		controller.restartGame();
+	}
+
+	@Override
+	public void gameOver(String message) {
+		showScreenIsFullDialog(message);
 	}
 
 }

@@ -46,10 +46,8 @@ public class ClientController implements Serializable{
 	{
 		new ClientController();
 	}
-	public void columnClicked(int columnIndex) throws IOException 
-	{
-		
-	}
+
+	
 	
 	public void restartGame () 
 	{
@@ -76,6 +74,12 @@ public class ClientController implements Serializable{
 	public int getRowMax ()
 	{
 		return 0;
+	}
+
+
+	public void columnClicked(int columnIndex) {
+		myServiceCaller.columnClicked(columnIndex);
+		
 	}
 	
 }
