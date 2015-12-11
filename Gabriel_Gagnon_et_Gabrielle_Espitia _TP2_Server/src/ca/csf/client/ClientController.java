@@ -1,7 +1,6 @@
 package ca.csf.client;
 
 import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.io.Serializable;
 
 import ca.csf.client.View;
@@ -18,6 +17,9 @@ public class ClientController implements Serializable{
 	private View view;
 	private int id = 0;
 	
+	private int nbRows;
+	private int nbColumns;
+	
 	public ClientController() 
 	{
 		callHandler = new CallHandler();
@@ -29,8 +31,11 @@ public class ClientController implements Serializable{
 			myServiceCaller = client.getGlobal(IServer.class);
 			
 			id = myServiceCaller.addPlayerObserver(view);
-			int a = myServiceCaller.getNbRows();
-			view.initBoard(myServiceCaller.getNbRows(), myServiceCaller.getNbColumns());
+			
+			nbRows = myServiceCaller.getNbRows();
+			nbColumns = myServiceCaller.getNbColumns();
+			
+			view.initBoard(nbRows,nbColumns);
 			
 			callHandler.registerGlobal(MyServerObserver.class, view);
 
@@ -54,33 +59,23 @@ public class ClientController implements Serializable{
 
 	}
 	
-	public String getPlayer() throws InvalidObjectException 
-	{
-		return null;
-	
-	}
-	
-	public String getAdversary() throws InvalidObjectException
-	{
-		return null;
-
-	}
-	
 	public int getColMax ()
 	{
-		return 0;
+		return nbColumns;
 	}
 	
 	public int getRowMax ()
 	{
-		return 0;
+		return nbRows;
 	}
 
 
 	public void columnClicked(int columnIndex) {
 		myServiceCaller.columnClicked(columnIndex);
-		
 	}
+
+
+
 	
 }
 

@@ -2,13 +2,17 @@ package ca.csf.server;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 
 
 import ca.csf.client.MyServerObserver;
 
-public class Model
+public class Model implements Serializable
 {
+	private static final long serialVersionUID = 42L;
+
 	private ArrayList<MyServerObserver> observers = new ArrayList<MyServerObserver>();
 	
 	private int howManyInLineToWin;

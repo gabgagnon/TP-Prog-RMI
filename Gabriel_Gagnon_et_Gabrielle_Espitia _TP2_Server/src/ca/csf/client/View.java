@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.io.InvalidObjectException;
 
 import javax.swing.JButton;
@@ -38,6 +37,8 @@ public class View extends JFrame implements MyServerObserver
 	
 	private Color colorPlayerOne = new Color(255,0,0);
 	private Color colorPlayerTwo = new Color(0,0,255);
+	private Boolean currentPlayer;
+	private String [] players = {"Player Two", "Player One"};
 	
 	
 	private final String TURN_PREFIX = "It's the turn of ";
@@ -145,15 +146,9 @@ public class View extends JFrame implements MyServerObserver
 		public void actionPerformed(ActionEvent arg0)
 		{
 			System.out.println("Action on menu");
-			try 
-			{
-				showScreenIsFullDialog(controller.getPlayer() + " resigned. " + controller.getAdversary()+ " has won!");
-			}
-			catch (InvalidObjectException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+				
+			showScreenIsFullDialog(getPlayerName() + " resigned. " + getAdversaryName() + " has won!");
 			
 		}
 	}
@@ -168,20 +163,19 @@ public class View extends JFrame implements MyServerObserver
 	}
 
 	@Override
-	public void coinAdded(int column, int row, boolean player) throws InvalidObjectException 
+	public void coinAdded(int column, int row, boolean player)
 	{
-		if (column < 0 || row < 0) throw new IndexOutOfBoundsException("The added coin can't be on a column or row' that doesn't exist");
-		if (column >= controller.getColMax() ||  row >= controller.getRowMax()) throw new IndexOutOfBoundsException("The added coin can't be on a column or row' that doesn't exist");
-		
+		currentPlayer = player;
+
 		if (player) 
 		{
 			placeHolders[row][column].setBackground(colorPlayerTwo);
 		}
-		else if (!player) 
+		else
 		{
 			placeHolders[row][column].setBackground(colorPlayerOne);
 		}
-		this.message.setText(TURN_PREFIX + controller.getPlayer());
+		this.message.setText(TURN_PREFIX + getPlayerName());
 	}
 	
 	@Override 
@@ -191,7 +185,7 @@ public class View extends JFrame implements MyServerObserver
 	    {
 	        t.setEnabled(false);
 	    }
-	    showScreenIsFullDialog(controller.getAdversary() + " won !");
+	    showScreenIsFullDialog(getAdversaryName() + " won !");
 	}
 	
 	@Override 
@@ -211,6 +205,17 @@ public class View extends JFrame implements MyServerObserver
 	@Override
 	public void gameOver(String message) {
 		showScreenIsFullDialog(message);
+	}
+	
+	public String getAdversaryName() {
+		int adversary = currentPlayer.booleanValue() ? 0 : 1;
+		return players[adversary];
+	}
+
+
+	public String getPlayerName() {
+		int player = currentPlayer.booleanValue() ? 1 : 0;
+		return players[player];
 	}
 
 }
