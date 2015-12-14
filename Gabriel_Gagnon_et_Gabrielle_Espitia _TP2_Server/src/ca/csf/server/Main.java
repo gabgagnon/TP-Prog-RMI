@@ -13,15 +13,15 @@ public class Main
 	
 	public static void main(final String[] args)
 	{
-        final JFrame parent = new JFrame();
+        final JFrame newGameView = new JFrame();
         JButton button = new JButton();
 
-        parent.setLocationRelativeTo(null);
+        newGameView.setLocationRelativeTo(null);
         
         button.setText("Start a new game ?");
-        parent.add(button);
-        parent.pack();
-        parent.setVisible(true);
+        newGameView.add(button);
+        newGameView.pack();
+        newGameView.setVisible(true);
 
         button.addActionListener(new java.awt.event.ActionListener() 
         {
@@ -30,17 +30,17 @@ public class Main
             {
             	try 
             	{
-            		colonne = Integer.parseInt(JOptionPane.showInputDialog(parent,
+            		colonne = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
                             "How many columns would you like to have on the board? There's a 25 maximum.", 6));
-                	rangee = Integer.parseInt(JOptionPane.showInputDialog(parent,
+                	rangee = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
                             "How many rows would you like to have on the board? There's a 25 maximum.", 7));
-                	longueurDeChaine = Integer.parseInt(JOptionPane.showInputDialog(parent,
+                	longueurDeChaine = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
                             "How many coins in line does it take to win? There's a 12 maximum.", 4));
-                	parent.setVisible(false);
+                	newGameView.setVisible(false);
                 	
                 	try
                 	{
-    					new ServerController(colonne, rangee, longueurDeChaine);
+    					new ServerController(colonne, rangee, longueurDeChaine, newGameView);
     				} catch (IndexOutOfBoundsException e) {
     					System.out.println("The game parameters were invalid. Please restart the application.");
     				}
@@ -55,4 +55,5 @@ public class Main
         });
         
 	}
+
 }

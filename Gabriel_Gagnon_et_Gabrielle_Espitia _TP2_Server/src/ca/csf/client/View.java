@@ -37,7 +37,7 @@ public class View extends JFrame implements MyServerObserver
 	
 	private Color colorPlayerOne = new Color(255,0,0);
 	private Color colorPlayerTwo = new Color(0,0,255);
-	private Boolean currentPlayer;
+	private Boolean currentPlayer = true;
 	private String [] players = {"Player Two", "Player One"};
 	
 	
@@ -46,7 +46,7 @@ public class View extends JFrame implements MyServerObserver
 	public View(ClientController controller)
 	{
 		this.controller = controller;
-		
+				
 		this.setTitle("Connect4");
 
 		this.configureWindow();
@@ -110,6 +110,9 @@ public class View extends JFrame implements MyServerObserver
 			}
 		}
 		this.add(centerPane, BorderLayout.CENTER);
+		
+		this.message.setText(TURN_PREFIX + getPlayerName());
+		
 		this.revalidate();
 	}
 
@@ -146,10 +149,9 @@ public class View extends JFrame implements MyServerObserver
 		public void actionPerformed(ActionEvent arg0)
 		{
 			System.out.println("Action on menu");
-			
-				
-			showScreenIsFullDialog(getPlayerName() + " resigned. " + getAdversaryName() + " has won!");
-			
+							
+			showEndGameDialog(getPlayerName() + " resigned. " + getAdversaryName() + " has won!");
+			controller.restartGame();
 		}
 	}
 
@@ -167,13 +169,13 @@ public class View extends JFrame implements MyServerObserver
 	{
 		currentPlayer = player;
 
-		if (player) 
+		if (!player) 
 		{
-			placeHolders[row][column].setBackground(colorPlayerTwo);
+			placeHolders[row][column].setBackground(colorPlayerOne);
 		}
 		else
 		{
-			placeHolders[row][column].setBackground(colorPlayerOne);
+			placeHolders[row][column].setBackground(colorPlayerTwo);
 		}
 		this.message.setText(TURN_PREFIX + getPlayerName());
 	}
@@ -185,7 +187,6 @@ public class View extends JFrame implements MyServerObserver
 	    {
 	        t.setEnabled(false);
 	    }
-	    showScreenIsFullDialog(getAdversaryName() + " won !");
 	}
 	
 	@Override 
@@ -195,25 +196,23 @@ public class View extends JFrame implements MyServerObserver
 
 		controlButtons[column].setEnabled(false);
 	}
-	
-	public void showScreenIsFullDialog(String message)
+
+	@Override
+	public void showEndGameDialog(String message) 
 	{
 		JOptionPane.showMessageDialog(View.this, message);
 		controller.restartGame();
 	}
-
-	@Override
-	public void gameOver(String message) {
-		showScreenIsFullDialog(message);
-	}
 	
-	public String getAdversaryName() {
+	public String getAdversaryName()
+	{
 		int adversary = currentPlayer.booleanValue() ? 0 : 1;
 		return players[adversary];
 	}
 
 
-	public String getPlayerName() {
+	public String getPlayerName() 
+	{
 		int player = currentPlayer.booleanValue() ? 1 : 0;
 		return players[player];
 	}

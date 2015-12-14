@@ -3,7 +3,9 @@ package ca.csf.server;
 import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.Serializable;
+import java.nio.channels.ShutdownChannelGroupException;
 import java.util.ArrayList;
+
 
 
 
@@ -26,7 +28,10 @@ public class Model implements Serializable
 	private boolean player = true;
 	
 	final String ARRAY_FULL_MSG = "Le tableau de jeu est complètement rempli. Partie nulle.";
-		
+	final String SOMEONE_WON = " a gagné !";
+	
+	final String [] PLAYERS = {"Joueur 1", "Joueur 2"};
+	
 	public Model(int column, int row, int width)
 	{
 		howManyInLineToWin = width;
@@ -95,7 +100,8 @@ public class Model implements Serializable
 		
 		if (IsArrayFull())
 		{
-			gameOver(ARRAY_FULL_MSG);
+			showGameOverDialog(ARRAY_FULL_MSG);
+			
 		}		
 	}
 	
@@ -106,8 +112,7 @@ public class Model implements Serializable
 			if (gameArray[x][rowMax - 1].empty) {
 				return false;
 			}			
-		}
-		
+		}		
 		return true;
 	}
 
@@ -141,11 +146,31 @@ public class Model implements Serializable
 				}   
 			}
 		}
+		
 		if(hasWon)
 		{
 			disableControlButtons();
+			showGameOverDialog(getPlayersName() + SOMEONE_WON);
 		}
 	 }
+	
+	
+	public String getPlayersName () 
+	{
+		String name;
+		
+		if (player) 
+		{
+			name = PLAYERS[0];
+		}
+		else 
+		{
+			name = PLAYERS[1];
+		}
+		
+		return name;
+	}
+		
 	
 	private void checkInSameDirection(int x, int y, int currentColumn, int currentRow) throws InvalidObjectException 
 	{
@@ -181,17 +206,19 @@ public class Model implements Serializable
 	}
 	
 	private void disableControlButton(int column)
+
 	{
 		for(MyServerObserver obs : this.observers)
 		{
 			obs.disableControlButton(column);
 		}
 	}
-	private void gameOver(String message) throws InvalidObjectException
+	
+	private void showGameOverDialog(String message) throws InvalidObjectException
 	{
 		for(MyServerObserver obs : this.observers)
 		{
-			obs.gameOver(message);
+			obs.showEndGameDialog(message);
 		}
 	}
 	

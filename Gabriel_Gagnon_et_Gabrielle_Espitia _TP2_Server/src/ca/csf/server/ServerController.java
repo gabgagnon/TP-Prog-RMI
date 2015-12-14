@@ -2,6 +2,8 @@ package ca.csf.server;
 
 import java.io.IOException;
 
+import javax.swing.JFrame;
+
 import ca.csf.client.MyServerObserver;
 import net.sf.lipermi.exception.LipeRMIException;
 import net.sf.lipermi.handler.CallHandler;
@@ -10,14 +12,17 @@ import net.sf.lipermi.net.Server;
 public class ServerController extends Server implements IServer
 {
 	private ca.csf.server.Model model;
+	private JFrame newGameDialog;
 
-	public ServerController(int column, int row, int width)
+	public ServerController(int column, int row, int width, JFrame newGameDialog)
 	{
 		if (row <= 0 || column <= 0) throw new IndexOutOfBoundsException("The board can't be empty.");
 		if (row >= 25 || column >= 25) throw new IndexOutOfBoundsException("The maximum size for a board is 25 by 25");
 		if (width > 12 || width < 4) throw new IndexOutOfBoundsException("The connect requirement has to be at least of 4, and lesser than 12");
 
 		this.model = new Model( column,  row,  width);
+		this.newGameDialog = newGameDialog;
+
 		
 		CallHandler callHandler = new CallHandler();
 		try {
@@ -78,7 +83,11 @@ public class ServerController extends Server implements IServer
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+	}
 
+	@Override
+	public void gameClosed() 
+	{
+		newGameDialog.setVisible(true);
 	}
 }

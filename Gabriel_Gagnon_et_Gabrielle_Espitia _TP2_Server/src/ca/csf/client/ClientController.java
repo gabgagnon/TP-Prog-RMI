@@ -43,20 +43,18 @@ public class ClientController implements Serializable{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-				
 	}
-	
 	
 	public static void main(String... args) throws IOException
 	{
 		new ClientController();
 	}
-
-	
-	
+		
 	public void restartGame () 
 	{
-
+		view.setVisible(false);
+		myServiceCaller.gameClosed();
+		view.dispose();
 	}
 	
 	public int getColMax ()
@@ -69,14 +67,9 @@ public class ClientController implements Serializable{
 		return nbRows;
 	}
 
-
 	public void columnClicked(int columnIndex) {
 		myServiceCaller.columnClicked(columnIndex);
 	}
-
-
-
-	
 }
 
 
