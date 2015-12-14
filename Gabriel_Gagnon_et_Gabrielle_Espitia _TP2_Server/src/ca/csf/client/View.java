@@ -151,7 +151,6 @@ public class View extends JFrame implements MyServerObserver
 			System.out.println("Action on menu");
 							
 			showEndGameDialog(getPlayerName() + " resigned. " + getAdversaryName() + " has won!");
-			controller.restartGame();
 		}
 	}
 
@@ -200,8 +199,7 @@ public class View extends JFrame implements MyServerObserver
 	@Override
 	public void showEndGameDialog(String message) 
 	{
-		JOptionPane.showMessageDialog(View.this, message);
-		controller.restartGame();
+		this.message.setText(message);
 	}
 	
 	public String getAdversaryName()

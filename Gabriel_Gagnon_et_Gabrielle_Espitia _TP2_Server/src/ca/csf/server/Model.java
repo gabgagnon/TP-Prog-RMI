@@ -27,10 +27,10 @@ public class Model implements Serializable
 	
 	private boolean player = true;
 	
-	final String ARRAY_FULL_MSG = "Le tableau de jeu est complètement rempli. Partie nulle.";
-	final String SOMEONE_WON = " a gagné !";
+	final String ARRAY_FULL_MSG = "The gameboard is completely full. It's a tie.";
+	final String SOMEONE_WON = " won !";
 	
-	final String [] PLAYERS = {"Joueur 1", "Joueur 2"};
+	final String [] PLAYERS = {"Player 1", "Won 2"};
 	
 	public Model(int column, int row, int width)
 	{
@@ -90,8 +90,8 @@ public class Model implements Serializable
 				player ^= true;		
 				gameArray[column][row].player = player;
 				notifyObservers(column, row, player);
-				isWon(column, row);
 				gameArray[column][row].empty = false;
+				isWon(column, row);
 				break;
 			}
 		}
@@ -127,9 +127,10 @@ public class Model implements Serializable
 	}
 
 	//FG: algo très bien, mais il serait intéressant d'abstraire les directions au lieu d'utiilser 1, 0 et -1 dans les boucles...
-	private void isWon (int column, int row) throws InvalidObjectException
+	private void isWon (int column, int row) throws Exception
 	{
 		boolean hasWon = false;
+		
 		for (int x = -1; x < 2; ++x)
 		{
 			for (int y = -1; y < 2; ++y)
@@ -149,6 +150,7 @@ public class Model implements Serializable
 		
 		if(hasWon)
 		{
+			notifyObservers(column, row, player);
 			disableControlButtons();
 			showGameOverDialog(getPlayersName() + SOMEONE_WON);
 		}

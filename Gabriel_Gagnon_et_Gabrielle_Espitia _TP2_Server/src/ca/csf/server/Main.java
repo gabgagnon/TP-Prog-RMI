@@ -18,7 +18,7 @@ public class Main
 
         newGameView.setLocationRelativeTo(null);
         
-        button.setText("Start a new game ?");
+        button.setText("Commencer une nouvelle partie?");
         newGameView.add(button);
         newGameView.pack();
         newGameView.setVisible(true);
@@ -48,9 +48,7 @@ public class Main
             	catch (NumberFormatException e)
             	{
 					System.out.println("Cancel button shouldn't be clicked.");
-
             	}
-
             }
         });
         

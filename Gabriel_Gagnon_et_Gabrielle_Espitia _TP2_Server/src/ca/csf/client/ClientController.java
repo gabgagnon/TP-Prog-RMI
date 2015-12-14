@@ -50,12 +50,6 @@ public class ClientController implements Serializable{
 		new ClientController();
 	}
 		
-	public void restartGame () 
-	{
-		view.setVisible(false);
-		myServiceCaller.gameClosed();
-		view.dispose();
-	}
 	
 	public int getColMax ()
 	{

@@ -88,6 +88,6 @@ public class ServerController extends Server implements IServer
 	@Override
 	public void gameClosed() 
 	{
-		newGameDialog.setVisible(true);
+		 System.exit(0);
 	}
 }
