@@ -1,6 +1,5 @@
 package ca.csf.server;
 
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
