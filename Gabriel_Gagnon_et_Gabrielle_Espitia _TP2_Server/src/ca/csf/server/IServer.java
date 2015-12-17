@@ -11,4 +11,5 @@ public int getNbRows();
 public int getNbColumns();
 public void columnClicked(int columnIndex);
 public void gameClosed();
+public void resign();
 }

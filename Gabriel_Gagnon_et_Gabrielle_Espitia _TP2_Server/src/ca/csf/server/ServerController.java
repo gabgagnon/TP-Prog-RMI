@@ -27,7 +27,7 @@ public class ServerController extends Server implements IServer
 		CallHandler callHandler = new CallHandler();
 		try {
 			callHandler.registerGlobal(IServer.class, this);
-			this.bind(12345, callHandler);
+			this.bind(4221, callHandler);
 			ServListener serv = new ServListener();
 			this.addServerListener(new ServListener());
 			while(true){
@@ -89,5 +89,10 @@ public class ServerController extends Server implements IServer
 	public void gameClosed() 
 	{
 		 System.exit(0);
+	}
+
+	@Override
+	public void resign() {
+		model.playerResigned();
 	}
 }

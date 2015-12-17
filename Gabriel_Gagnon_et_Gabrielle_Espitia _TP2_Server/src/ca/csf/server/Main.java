@@ -29,17 +29,10 @@ public class Main
             {
             	try 
             	{
-            		colonne = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
-                            "How many columns would you like to have on the board? There's a 25 maximum.", 6));
-                	rangee = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
-                            "How many rows would you like to have on the board? There's a 25 maximum.", 7));
-                	longueurDeChaine = Integer.parseInt(JOptionPane.showInputDialog(newGameView,
-                            "How many coins in line does it take to win? There's a 12 maximum.", 4));
-                	newGameView.setVisible(false);
-                	
                 	try
                 	{
-    					new ServerController(colonne, rangee, longueurDeChaine, newGameView);
+    					new ServerController(7, 6, 4, newGameView);
+    					button.setText("Partie en cours");
     				} catch (IndexOutOfBoundsException e) {
     					System.out.println("The game parameters were invalid. Please restart the application.");
     				}

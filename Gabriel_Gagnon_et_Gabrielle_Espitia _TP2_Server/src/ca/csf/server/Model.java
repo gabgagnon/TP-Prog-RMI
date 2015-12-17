@@ -29,6 +29,7 @@ public class Model implements Serializable
 	
 	final String ARRAY_FULL_MSG = "The gameboard is completely full. It's a tie.";
 	final String SOMEONE_WON = " won !";
+	final String SOMEONE_RESIGNED = " resigned !";
 	
 	final String [] PLAYERS = {"Player 1", "Won 2"};
 	
@@ -208,7 +209,6 @@ public class Model implements Serializable
 	}
 	
 	private void disableControlButton(int column)
-
 	{
 		for(MyServerObserver obs : this.observers)
 		{
@@ -220,7 +220,21 @@ public class Model implements Serializable
 	{
 		for(MyServerObserver obs : this.observers)
 		{
-			obs.showEndGameDialog(message);
+			obs.showInConsole(message);
+		}
+	}
+
+	public void playerResigned()
+	{
+		try
+		{
+			showGameOverDialog(getPlayersName() + SOMEONE_RESIGNED);
+			disableControlButtons();
+		}
+		catch (InvalidObjectException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
